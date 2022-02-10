@@ -1,4 +1,4 @@
-import {Emitter} from "./emitter";
+import {EventEmitter} from "events";
 
 /**
  * @typedef {object} TreeData
@@ -168,7 +168,7 @@ function attr(el, attrs) {
 }
 
 
-export class Tree extends Emitter {
+export class Tree extends EventEmitter {
   /**
    * @param {TreeData|TreeData[]} data
    * @param {Tree} [parent]
