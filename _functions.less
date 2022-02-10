@@ -1,0 +1,270 @@
+// Dimensions -----------------------
+.width(@width) when not(@width="") {
+    width: @width;
+}
+
+.height(@height) when not(@height="") {
+    height: @height;
+}
+
+
+.size(@width: 0, @height: 0, @display: "") {
+    .width(@width);
+    .height(@height);
+}
+
+.size(@width: 0, @height: 0, @display: "") when not (@display = "") {
+    display: @display;
+}
+
+.size(@width, @height, inline-block, @vertical-align: top) {
+    display: inline-block;
+    .width(@width);
+    .height(@height);
+    vertical-align: @vertical-align;
+}
+
+.size(@width, @height, flex, @align: center, @vertical-align: center) {
+    display: flex;
+    .width(@width);
+    .height(@height);
+    justify-content: @align;
+    align-items: @vertical-align;
+}
+
+.size(@width, @height, inline-flex, @align: center, @vertical-align: center) {
+    display: inline-flex;
+    .width(@width);
+    .height(@height);
+    justify-content: @align;
+    align-items: @vertical-align;
+}
+
+// POSITION -------------------------
+
+.top(@top) when not(@top="") {
+    top: @top;
+}
+
+.bottom(@bottom) when not(@bottom="") {
+    bottom: @bottom;
+}
+
+.left(@left) when not(@left="") {
+    left: @left;
+}
+
+.right(@right) when not(@right="") {
+    right: @right;
+}
+
+.position(@left: 0, @top: 0) when not (iskeyword(@left)) {
+    .position(top-left, @left, @top);
+}
+
+.position(top-left, @left: 0, @top: 0) {
+    .top(@top);
+    .left(@left);
+}
+
+.position(top-right, @right: 0, @top: 0) {
+    .top(@top);
+    .right(@right);
+}
+
+.position(bottom-left, @left: 0, @bottom: 0) {
+    .bottom(@bottom);
+    .left(@left);
+}
+
+.position(bottom-right, @right: 0, @bottom: 0) {
+    .bottom(@bottom);
+    .right(@right);
+}
+
+.position(left-top, @left: 0, @top: 0) {
+    .position(top-left, @left, @top);
+}
+
+.position(right-top, @right: 0, @top: 0) {
+    .position(top-right, @right, @top);
+}
+
+.position(left-bottom, @left: 0, @bottom: 0) {
+    .position(bottom-left, @left, @bottom);
+}
+
+.position(right-bottom, @right: 0, @bottom: 0) {
+    .position(bottom-right, @right, @bottom);
+}
+
+.relative(@_, @left: 0, @top: 0) when (iskeyword(@_)) {
+    position: relative;
+    .position(@_, @left, @top);
+}
+
+.relative(@left: 0, @top: 0) when not (iskeyword(@left)) {
+    .relative(top-left, @left, @top);
+}
+
+.absolute(@_, @left: 0, @top: 0) when (iskeyword(@_)) {
+    position: absolute;
+    .position(@_, @left, @top);
+}
+
+.absolute(@left: 0, @top: 0) when not (iskeyword(@left)) {
+    .absolute(top-left, @left, @top);
+}
+
+.fixed(@_, @left: 0, @top: 0) when (iskeyword(@_)) {
+    position: fixed;
+    .position(@_, @left, @top);
+}
+
+.fixed(@left: 0, @top: 0) when not (iskeyword(@left)) {
+    .fixed(top-left, @left, @top);
+}
+
+.placeholder(@color) {
+    &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+        color: @color;
+    }
+    &::-moz-placeholder { /* Firefox 19+ */
+        opacity: 1;
+        color: @color;
+    }
+    &:-ms-input-placeholder { /* IE 10+ */
+        color: @color;
+    }
+    &:-moz-placeholder { /* Firefox 18- */
+        opacity: 1;
+        color: @color;
+    }
+}
+
+
+.user-select(@select: none) {
+    -ms-user-select: @select;
+    -moz-user-select: @select;
+    -webkit-user-select: @select;
+    user-select: @select;
+}
+
+.appearance(@value: none) {
+    -webkit-appearance: @value;
+    -moz-appearance: @value;
+    appearance: @value;
+}
+
+
+.vue-fade(@speed) {
+    //Transitions
+    &.vue-fade-enter-active,
+    &.vue-fade-leave-active {
+        transition: opacity @speed;
+    }
+
+    &.vue-fade-enter,
+    &.vue-fade-leave-to {
+        opacity: 0;
+    }
+
+}
+
+.vue-fadedown(@speed) {
+    //Transitions
+    &.vue-fadedown-enter-active,
+    &.vue-fadedown-leave-active {
+        transition: opacity @speed, transform @speed;
+        transform: translateY(0);
+    }
+
+    &.vue-fadedown-enter,
+    &.vue-fadedown-leave-to {
+        opacity: 0;
+        transform: translateY(-100px);
+    }
+
+}
+
+.input-range(
+    @track-color: #424242,
+    @thumb-color: #555bc8,
+
+    @thumb-radius: 8px,
+    @thumb-height: 30px,
+    @thumb-width: 30px,
+    @thumb-shadow-size: 1px,
+    @thumb-shadow-blur: 1px,
+    @thumb-shadow-color: #111,
+    @thumb-border-width: 1px,
+    @thumb-border-color: var(--fe-white),
+
+    @track-width: 100%,
+    @track-height: 10px,
+    @track-shadow-size: 2px,
+    @track-shadow-blur: 2px,
+    @track-shadow-color: #222,
+    @track-border-width: 1px,
+    @track-border-color: black,
+
+    @track-radius: 5px,
+    @contrast: 5%
+) {
+    .shadow(@shadow-size,@shadow-blur,@shadow-color) {
+        box-shadow: @shadow-size @shadow-size @shadow-blur @shadow-color, 0 0 @shadow-size lighten(@shadow-color, 5%);
+    }
+
+    .track() {
+        width: @track-width;
+        height: @track-height;
+        cursor: pointer;
+    }
+
+    .thumb() {
+        .shadow(@thumb-shadow-size, @thumb-shadow-blur, @thumb-shadow-color);
+        border: @thumb-border-width solid @thumb-border-color;
+        height: @thumb-height;
+        width: @thumb-width;
+        border-radius: @thumb-radius;
+        background: @thumb-color;
+        cursor: pointer;
+    }
+
+    -webkit-appearance: none;
+    margin: @thumb-height/2 0;
+    width: @track-width;
+
+    &:focus {
+        outline: none;
+    }
+
+    &::-webkit-slider-runnable-track {
+        .track();
+        .shadow(@track-shadow-size, @track-shadow-blur, @track-shadow-color);
+        background: @track-color;
+        border-radius: @track-radius;
+        border: @track-border-width solid @track-border-color;
+    }
+
+    &::-webkit-slider-thumb {
+        .thumb();
+        -webkit-appearance: none;
+        margin-top: ((-@track-border-width * 2 + @track-height) / 2) - (@thumb-height / 2);
+    }
+
+    &:focus::-webkit-slider-runnable-track {
+        background: lighten(@track-color, @contrast);
+    }
+
+    &::-moz-range-track {
+        .track();
+        .shadow(@track-shadow-size, @track-shadow-blur, @track-shadow-color);
+        background: @track-color;
+        border-radius: @track-radius;
+        border: @track-border-width solid @track-border-color;
+    }
+    &::-moz-range-thumb {
+        .thumb();
+    }
+}
