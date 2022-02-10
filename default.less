@@ -1,0 +1,129 @@
+
+.pm-tree {
+  @BEM: ~".pm-tree";
+  --speed: .25s;
+  --min-size: 20px;
+  --indent: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  justify-content: stretch;
+  align-items: center;
+  user-select: none;
+
+  &__toggle {
+    display: block;
+    width: var(--min-size);
+    min-height: var(--min-size);
+    flex: 0 0 auto;
+
+    &:after {
+      content: "►";
+      .size(100%, 100%, flex);
+      transform: rotate(0deg);
+      transition: transform var(--speed);
+    }
+
+    &[level="0"], &[children="0"] {
+      display: none;
+    }
+
+    &[state="1"] {
+      &:after {
+        transform: rotate(90deg);
+      }
+    }
+  }
+
+  &__value {
+    --color: var(--fe-darkblue);
+    --background: var(--fe-white);
+    --color-hilight: var(--fe-blue);
+    display: flex;
+    align-items: center;
+    justify-content: stretch;
+    width: calc(100% - 20px);
+    flex: 0 0 auto;
+    min-height: var(--min-size);
+    position: relative;
+
+    &[children="0"] {
+      width: 100%;
+    }
+
+    &[level="0"] {
+      display: none;
+    }
+
+    color: var(--color);
+    background: var(--background);
+    transition: background .2s;
+
+    &:hover {
+      --background: var(--fe-lightgrey);
+    }
+
+    [searching="1"] & {
+      opacity: .3;
+
+      &[found="1"] {
+        opacity: 1;
+      }
+    }
+
+    &[selected="1"],
+    &[selected="1"]:hover {
+      --color: var(--fe-white);
+      --background: var(--fe-red);
+      --color-hilight: var(--fe-white);
+    }
+  }
+
+  &__children {
+    margin-left: var(--indent);
+    width: calc(100% - var(--indent));
+    display: none;
+    flex: 1 0 auto;
+    flex-direction: column;
+    align-items: stretch;
+    opacity: 1;
+
+
+    > * {
+      margin-top: 0;
+    }
+
+    &[level="0"] {
+      margin: 0;
+      width: 100%;
+    }
+
+    &[state="1"] {
+      display: flex;
+    }
+
+    &.enter-active, &.leave-active {
+      transition: opacity calc(var(--speed) / 2);
+      display: flex;
+      overflow: hidden;
+      opacity: 1;
+
+      > * {
+        transition: margin-top var(--speed);
+      }
+    }
+
+    &.enter, &.leave-to {
+      opacity: 0;
+
+      > * {
+        margin-top: -20px;
+      }
+    }
+  }
+
+  &[level="0"] {
+    overflow-y: auto;
+    max-height: 600px;
+  }
+}
